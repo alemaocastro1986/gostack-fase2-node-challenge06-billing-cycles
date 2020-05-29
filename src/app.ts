@@ -1,6 +1,8 @@
 import 'reflect-metadata';
 import 'dotenv/config';
 
+import multer from 'multer';
+
 import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 
@@ -23,7 +25,12 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
     });
   }
 
-  console.error(err);
+  if (err instanceof multer.MulterError) {
+    return response.status(415).json({
+      status: 'file error',
+      message: err.message,
+    });
+  }
 
   return response.status(500).json({
     status: 'error',
