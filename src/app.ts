@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import 'dotenv/config';
 
+import cors from 'cors';
 import multer from 'multer';
 
 import express, { Request, Response, NextFunction } from 'express';
@@ -13,6 +14,8 @@ import createConnection from './database';
 
 createConnection();
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 app.use(routes);
